@@ -5,7 +5,7 @@
  with the ESP8266 board/library.
 
  It connects to an MQTT server then:
-  - publishes "hello world" to the topic "outTopic" every two seconds
+  - publishes "hello world" to the topic mqtt_topic every two seconds
 
  It will reconnect to the server if the connection is lost using a blocking
  reconnect function. See the 'mqtt_reconnect_nonblocking' example for how to
