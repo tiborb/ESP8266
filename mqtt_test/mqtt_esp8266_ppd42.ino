@@ -115,9 +115,9 @@ void sensorDHT() {
   /**********************************************/
 void connectWifi() {
   WiFi.begin(ssid, password); // Start WiFI
-  
+
   Serial.print("Connecting ");
-  while (WiFi.status() != WL_CONNECTED) 
+  while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
     Serial.print(".");
@@ -177,24 +177,18 @@ void sendData(const String& data) {
 
 /**********************************************/
 /* publish data to broker
-  /**********************************************/
+/**********************************************/
 void reconnectBroker() {
   // Loop until we're reconnected
   while (!mqttClient.connected()) {
-    Serial.println("MQTT Attempting connection...");
-    Serial.print("Client_id: ");
-    Serial.println(mqtt_client_id);
-    Serial.print("User: ");
-    Serial.println(mqtt_user);
-    Serial.print("PW: ");
-    Serial.println(mqtt_pw);
+    Serial.println("mqtt attempting connection...");
     // Attempt to connect
     if (mqttClient.connect(mqtt_client_id, mqtt_user, mqtt_pw)) {
-      Serial.println("MQTT connected");
+      Serial.println("mqtt connected");
     } else {
-      Serial.print("MQTT failed, rc=");
+      Serial.print("mqtt failed, rc=");
       Serial.print(mqttClient.state());
-      Serial.println("MQTT try again in 5 seconds");
+      Serial.println("mqtt try again in 5 seconds");
       // Wait 5 seconds before retrying
       delay(5000);
     }
@@ -315,7 +309,7 @@ void loop() {
     msg += "\"P1\":\"";
     msg += Float2String(concentration);
     msg += "\",";
-          
+
     ratio = lowpulseoccupancyP2 / (sampletime_ms * 10.0);
     concentration = 1.1 * pow(ratio, 3) - 3.8 * pow(ratio, 2) + 520 * ratio + 0.62;
     // Begin printing
@@ -347,7 +341,7 @@ void loop() {
     msg += "\"P2\":\"";
     msg += Float2String(concentration);
     msg += "\"}";
-    
+
     //sending to dustix api
     if (send_http == true){
       Serial.println("#### Sending to dusti.xyz: ");
@@ -359,7 +353,7 @@ void loop() {
       Serial.println("#### Sending to broker: ");
       const char * c = msg.c_str();
       Serial.println(c);
-      
+
       if (!mqttClient.publish(mqtt_topic, c)) {
         Serial.println("Publish failed");
       }
@@ -375,5 +369,3 @@ void loop() {
     Serial.println("------------------------------");
   }
 }
-
-
